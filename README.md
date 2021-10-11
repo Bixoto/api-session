@@ -12,6 +12,8 @@
 
     pip install api-session
 
+Dependency: Python 3.8+.
+
 ## Usage
 
 ```python3
