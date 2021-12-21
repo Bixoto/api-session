@@ -6,6 +6,7 @@ authors = ["Baptiste Fontaine <baptiste@bixoto.com>"]
 license = "MIT"
 homepage = "https://github.com/Bixoto/api-session"
 include = ["api_session/py.typed"]
+readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.8"
