@@ -1,8 +1,9 @@
 # api-session Changelog
 
-## Unreleased
+## 1.0.0 (2022/01/13)
 
 * Add `.head_api()`
+* This releases moves to 1.x because the library API is stable
 
 ## 0.1.1 (2021/12/21)
 
