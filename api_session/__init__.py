@@ -85,7 +85,7 @@ class APISession(requests.Session):
         Equivalent of ``.get_api()`` that parses a JSON response. Return ``None`` on 404s and throws on other errors.
 
         :param path: URL path. This must start with a slash
-        :param params: GET params
+        :param params: query params
         :param throw: if True, throw an exception on error
         :param none_on_404: if True (the default), 404 errors are ignored and ``None`` is returned instead.
         :param kwargs: keyword arguments passed to the underlying call
@@ -97,6 +97,17 @@ class APISession(requests.Session):
         if throw:
             self.raise_for_response(r)
         return r.json()
+
+    def head_api(self, path: str, params: Optional[dict] = None, *, throw=False, **kwargs):
+        """
+        Equivalent of .head() that prefixes the path with the base API URL.
+
+        :param path: path, starting with a slash
+        :param params: query params
+        :param throw: throw an exception on error
+        :return: requests.Response object
+        """
+        return self.request_api('head', path, params=params, throw=throw, **kwargs)
 
     def post_api(self, path: str, *args, throw=False, **kwargs):
         """

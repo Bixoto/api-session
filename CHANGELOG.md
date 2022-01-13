@@ -1,5 +1,9 @@
 # api-session Changelog
 
+## Unreleased
+
+* Add `.head_api()`
+
 ## 0.1.1 (2021/12/21)
 
 * Add `py.typed` to mark the module as PEP-561-compliant
