@@ -1,5 +1,9 @@
 # api-session Changelog
 
+## 1.1.0 (2022/02/03)
+
+* Add `bypass_read_only` optional parameter to `request_api()`
+
 ## 1.0.0 (2022/01/13)
 
 * Add `.head_api()`
