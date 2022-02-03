@@ -3,6 +3,7 @@ from typing import Optional
 import requests
 
 __version__ = "1.0.0"
+READ_METHODS = {"HEAD", "GET", "OPTIONS", "CONNECT", "TRACE"}
 
 
 class APISession(requests.Session):
@@ -46,7 +47,7 @@ class APISession(requests.Session):
         assert not self.read_only
         return super().delete(*args, **kwargs)
 
-    def request_api(self, method: str, path: str, *args, throw=False, **kwargs):
+    def request_api(self, method: str, path: str, *args, throw=False, bypass_read_only=False, **kwargs):
         """
         Wrapper around .request() that prefixes the path with the base API URL.
 
@@ -54,10 +55,11 @@ class APISession(requests.Session):
         :param path: API path. This must start with "/"
         :param args: arguments passed to ``.request()``
         :param throw: if True, raise an exception if the response is an error
+        :param bypass_read_only: if True, ignore the ``.read_only`` attribute
         :param kwargs: keyword arguments passed to ``.request()``
         :return:
         """
-        if self.read_only and method.upper() not in {"HEAD", "GET", "OPTIONS", "CONNECT", "TRACE"}:
+        if self.read_only and not bypass_read_only and method.upper() not in READ_METHODS:
             raise RuntimeError("Can't perform %s action in read-only mode!" % method)
 
         assert path.startswith("/")
