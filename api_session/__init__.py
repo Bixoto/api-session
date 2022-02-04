@@ -13,10 +13,9 @@ class APISession(requests.Session):
 
     def __init__(self, base_url: str, user_agent: Optional[str] = None, read_only=False):
         """
-
         :param base_url: Base URL of the API.
-        :param user_agent: Optional user-agent header to use (default to requests’).
-        :param read_only: if True, any POST/PUT/DELETE call will fail with an AssertError
+        :param user_agent: Optional user-agent header to use.
+        :param read_only: if True, any POST/PUT/DELETE call will fail with an AssertError.
         """
         super().__init__()
 
@@ -24,7 +23,7 @@ class APISession(requests.Session):
         self.read_only = read_only
 
         if user_agent is not None:
-            self.headers.setdefault('User-Agent', user_agent)
+            self.headers['User-Agent'] = user_agent
 
     # noinspection PyMethodMayBeStatic
     def raise_for_response(self, response: requests.Response):
