@@ -127,6 +127,16 @@ class APISession(requests.Session):
         """
         return self.request_api('put', path, *args, throw=throw, **kwargs)
 
+    def patch_api(self, path: str, *args, throw=False, **kwargs):
+        """
+        Equivalent of .patch() that prefixes the path with the base API URL.
+
+        :param path: URL path. This must start with a slash
+        :param throw: if True, throw an exception on error
+        :return: requests.Response object
+        """
+        return self.request_api('patch', path, *args, throw=throw, **kwargs)
+
     def delete_api(self, path: str, throw=False, **kwargs):
         """
         Equivalent of .delete() that prefixes the path with the base API URL.
