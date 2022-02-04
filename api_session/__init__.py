@@ -89,7 +89,7 @@ class APISession(requests.Session):
         :param kwargs: keyword arguments passed to the underlying call
         :return:
         """
-        r = self.get_api(path, params=params, throw=throw, **kwargs)
+        r = self.get_api(path, params=params, throw=False if none_on_404 else throw, **kwargs)
         if none_on_404 and r.status_code == 404:
             return None
         if throw:
