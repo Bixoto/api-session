@@ -1,5 +1,10 @@
 # api-session Changelog
 
+## Unreleased
+
+* Add `.patch_api` method
+* Support `read_only` in the base `request()` method as well
+
 ## 1.1.1 (2022/02/04)
 
 * Fix `user_agent` support
