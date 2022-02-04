@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Union, Text
 
 import requests
 
@@ -34,7 +34,7 @@ class APISession(requests.Session):
         # Override this method as needed
         response.raise_for_status()
 
-    def request(self, method: str, url: str, *args, bypass_read_only=False, **kwargs):
+    def request(self, method: str, url: Union[str, bytes, Text], *args, bypass_read_only=False, **kwargs):
         """
         :param method: method argument passed to the underlying ``.request()`` method
         :param url: URL argument passed to the underlying ``.request()`` method
