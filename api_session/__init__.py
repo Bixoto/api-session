@@ -2,7 +2,7 @@ from typing import Optional
 
 import requests
 
-__version__ = "1.1.0"
+__version__ = "1.1.1"
 READ_METHODS = {"HEAD", "GET", "OPTIONS", "CONNECT", "TRACE"}
 
 

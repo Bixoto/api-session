@@ -1,5 +1,9 @@
 # api-session Changelog
 
+## 1.1.1 (2022/02/04)
+
+* Fix `user_agent` support
+
 ## 1.1.0 (2022/02/03)
 
 * Add `bypass_read_only` optional parameter to `request_api()`
