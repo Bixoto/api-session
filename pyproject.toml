@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "api-session"
-version = "1.1.1"
+version = "1.2.0"
 description = "requests.Session to work with (JSON) APIs"
 authors = ["Baptiste Fontaine <baptiste@bixoto.com>"]
 license = "MIT"

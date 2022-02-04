@@ -1,9 +1,12 @@
 # api-session Changelog
 
-## Unreleased
+## 1.2.0 (2022/02/04)
 
 * Add `.patch_api` method
 * Support `read_only` in the base `request()` method as well
+* Don’t throw if `get_json_api` is called with `throw=True, none_on_404=True` (the default) and
+  encounters a 404 error. This is the documented behavior but the logic wasn’t correctly
+  implemented.
 
 ## 1.1.1 (2022/02/04)
 
