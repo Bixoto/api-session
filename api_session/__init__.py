@@ -34,19 +34,20 @@ class APISession(requests.Session):
         # Override this method as needed
         response.raise_for_status()
 
-    def post(self, *args, **kwargs):
-        assert not self.read_only
-        return super().post(*args, **kwargs)
+    def request(self, method: str, url: str, *args, bypass_read_only=False, **kwargs):
+        """
+        :param method: method argument passed to the underlying ``.request()`` method
+        :param url: URL argument passed to the underlying ``.request()`` method
+        :param args: arguments passed to the underlying ``.request()`` method
+        :param bypass_read_only: if True, ignore the ``.read_only`` attribute
+        :param kwargs: keyword arguments passed to the underlying ``.request()`` method
+        :return:
+        """
+        if self.read_only and not bypass_read_only and method.upper() not in READ_METHODS:
+            raise AssertionError("Can't perform %s action in read-only mode!" % method)
+        return super().request(method, url, *args, **kwargs)
 
-    def put(self, *args, **kwargs):
-        assert not self.read_only
-        return super().put(*args, **kwargs)
-
-    def delete(self, *args, **kwargs):
-        assert not self.read_only
-        return super().delete(*args, **kwargs)
-
-    def request_api(self, method: str, path: str, *args, throw=False, bypass_read_only=False, **kwargs):
+    def request_api(self, method: str, path: str, *args, throw=False, **kwargs):
         """
         Wrapper around .request() that prefixes the path with the base API URL.
 
@@ -54,13 +55,9 @@ class APISession(requests.Session):
         :param path: API path. This must start with "/"
         :param args: arguments passed to ``.request()``
         :param throw: if True, raise an exception if the response is an error
-        :param bypass_read_only: if True, ignore the ``.read_only`` attribute
         :param kwargs: keyword arguments passed to ``.request()``
         :return:
         """
-        if self.read_only and not bypass_read_only and method.upper() not in READ_METHODS:
-            raise RuntimeError("Can't perform %s action in read-only mode!" % method)
-
         assert path.startswith("/")
 
         url = self.base_url + path
