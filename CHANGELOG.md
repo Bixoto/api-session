@@ -1,5 +1,10 @@
 # api-session Changelog
 
+## 1.2.1 (2022/04/01)
+
+* `throw` defaults to `None` instead of `False` in all methods. This allows a class that overrides `request_api` to
+  know if the parameter was set (`True` or `False`) or not (`None`).
+
 ## 1.2.0 (2022/02/04)
 
 * Add `.patch_api` method
