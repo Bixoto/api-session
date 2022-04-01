@@ -47,14 +47,14 @@ class APISession(requests.Session):
             raise AssertionError("Can't perform %s action in read-only mode!" % method)
         return super().request(method, url, *args, **kwargs)
 
-    def request_api(self, method: str, path: str, *args, throw=False, **kwargs):
+    def request_api(self, method: str, path: str, *args, throw: Optional[bool] = None, **kwargs):
         """
         Wrapper around .request() that prefixes the path with the base API URL.
 
         :param method: HTTP method
         :param path: API path. This must start with "/"
         :param args: arguments passed to ``.request()``
-        :param throw: if True, raise an exception if the response is an error
+        :param throw: if True, raise an exception if the response is an error.
         :param kwargs: keyword arguments passed to ``.request()``
         :return:
         """
@@ -67,7 +67,7 @@ class APISession(requests.Session):
             self.raise_for_response(r)
         return r
 
-    def get_api(self, path: str, params: Optional[dict] = None, *, throw=False, **kwargs):
+    def get_api(self, path: str, params: Optional[dict] = None, *, throw: Optional[bool] = None, **kwargs):
         """
         Equivalent of .get() that prefixes the path with the base API URL.
 
@@ -96,7 +96,7 @@ class APISession(requests.Session):
             self.raise_for_response(r)
         return r.json()
 
-    def head_api(self, path: str, params: Optional[dict] = None, *, throw=False, **kwargs):
+    def head_api(self, path: str, params: Optional[dict] = None, *, throw: Optional[bool] = None, **kwargs):
         """
         Equivalent of .head() that prefixes the path with the base API URL.
 
@@ -107,7 +107,7 @@ class APISession(requests.Session):
         """
         return self.request_api('head', path, params=params, throw=throw, **kwargs)
 
-    def post_api(self, path: str, *args, throw=False, **kwargs):
+    def post_api(self, path: str, *args, throw: Optional[bool] = None, **kwargs):
         """
         Equivalent of .post() that prefixes the path with the base API URL.
 
@@ -117,7 +117,7 @@ class APISession(requests.Session):
         """
         return self.request_api('post', path, *args, throw=throw, **kwargs)
 
-    def put_api(self, path: str, *args, throw=False, **kwargs):
+    def put_api(self, path: str, *args, throw: Optional[bool] = None, **kwargs):
         """
         Equivalent of .put() that prefixes the path with the base API URL.
 
@@ -127,7 +127,7 @@ class APISession(requests.Session):
         """
         return self.request_api('put', path, *args, throw=throw, **kwargs)
 
-    def patch_api(self, path: str, *args, throw=False, **kwargs):
+    def patch_api(self, path: str, *args, throw: Optional[bool] = None, **kwargs):
         """
         Equivalent of .patch() that prefixes the path with the base API URL.
 
@@ -137,7 +137,7 @@ class APISession(requests.Session):
         """
         return self.request_api('patch', path, *args, throw=throw, **kwargs)
 
-    def delete_api(self, path: str, throw=False, **kwargs):
+    def delete_api(self, path: str, throw: Optional[bool] = None, **kwargs):
         """
         Equivalent of .delete() that prefixes the path with the base API URL.
 
