@@ -46,10 +46,21 @@ def test_throw():
 
 def test_get_json_api():
     s = APISession("https://httpbin.org")
+    assert s.none_on_404 is True
+
+    with pytest.raises(HTTPError):
+        s.get_json_api("/status/404", none_on_404=False)
+
+    assert s.get_json_api("/status/404") is None
+    assert s.get_json_api("/status/404", none_on_404=True) is None
+
+    assert isinstance(s.get_json_api("/headers"), dict)
+
+    s.none_on_404 = False
+    with pytest.raises(HTTPError):
+        s.get_json_api("/status/404")
 
     with pytest.raises(HTTPError):
         s.get_json_api("/status/404", none_on_404=False)
 
     assert s.get_json_api("/status/404", none_on_404=True) is None
-
-    assert isinstance(s.get_json_api("/headers"), dict)

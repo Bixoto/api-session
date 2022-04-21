@@ -11,16 +11,20 @@ class APISession(requests.Session):
     """
     READ_METHODS = {"HEAD", "GET", "OPTIONS", "CONNECT", "TRACE"}
 
-    def __init__(self, base_url: str, user_agent: Optional[str] = None, read_only=False):
+    def __init__(self, base_url: str, user_agent: Optional[str] = None, read_only=False, *,
+                 none_on_404=True):
         """
         :param base_url: Base URL of the API.
         :param user_agent: Optional user-agent header to use.
         :param read_only: if True, any POST/PUT/DELETE call will fail with an AssertError.
+        :param none_on_404: set the default for the argument of the same name ``.get_json_api`` calls. This can still
+          be overridden by passing it explicitly when calling the method.
         """
         super().__init__()
 
         self.base_url = base_url.rstrip("/")
         self.read_only = read_only
+        self.none_on_404 = none_on_404
 
         if user_agent is not None:
             self.headers['User-Agent'] = user_agent
@@ -78,19 +82,23 @@ class APISession(requests.Session):
         """
         return self.request_api('get', path, params=params, throw=throw, **kwargs)
 
-    def get_json_api(self, path: str, params: Optional[dict] = None, *, throw=True, none_on_404=True, **kwargs):
+    def get_json_api(self, path: str, params: Optional[dict] = None, *, throw=True, none_on_404: Optional[bool] = None,
+                     **kwargs):
         """
         Equivalent of ``.get_api()`` that parses a JSON response. Return ``None`` on 404s and throws on other errors.
 
         :param path: URL path. This must start with a slash
         :param params: query params
         :param throw: if True, throw an exception on error
-        :param none_on_404: if True (the default), 404 errors are ignored and ``None`` is returned instead.
+        :param none_on_404: if True, 404 errors are ignored and ``None`` is returned instead. This default on
+          the ``.none_on_404`` instance attribute if set, ``True`` otherwise.
         :param kwargs: keyword arguments passed to the underlying call
         :return:
         """
+        none_on_404 = none_on_404 is True or (none_on_404 is None and self.none_on_404)
+
         r = self.get_api(path, params=params, throw=False if none_on_404 else throw, **kwargs)
-        if none_on_404 and r.status_code == 404:
+        if r.status_code == 404 and none_on_404:
             return None
         if throw:
             self.raise_for_response(r)
