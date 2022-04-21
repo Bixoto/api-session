@@ -3,13 +3,13 @@ from typing import Optional, Union, Text
 import requests
 
 __version__ = "1.2.1"
-READ_METHODS = {"HEAD", "GET", "OPTIONS", "CONNECT", "TRACE"}
 
 
 class APISession(requests.Session):
     """
     HTTP Session with helpers to call a JSON-based API.
     """
+    READ_METHODS = {"HEAD", "GET", "OPTIONS", "CONNECT", "TRACE"}
 
     def __init__(self, base_url: str, user_agent: Optional[str] = None, read_only=False):
         """
@@ -43,7 +43,7 @@ class APISession(requests.Session):
         :param kwargs: keyword arguments passed to the underlying ``.request()`` method
         :return:
         """
-        if self.read_only and not bypass_read_only and method.upper() not in READ_METHODS:
+        if self.read_only and not bypass_read_only and method.upper() not in self.READ_METHODS:
             raise AssertionError("Can't perform %s action in read-only mode!" % method)
         return super().request(method, url, *args, **kwargs)
 
