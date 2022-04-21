@@ -2,7 +2,7 @@ from typing import Optional, Union, Text
 
 import requests
 
-__version__ = "1.2.1"
+__version__ = "1.3.0"
 
 
 class APISession(requests.Session):

@@ -1,5 +1,10 @@
 # api-session Changelog
 
+## 1.3.0 (2022/04/21)
+
+* Move `api_session.READ_METHODS` to `APISession.READ_METHODS` to make it easier to override
+* Add `.none_on_404` to set the default for `.get_json_api`’s argument of the same name
+
 ## 1.2.1 (2022/04/01)
 
 * `throw` defaults to `None` instead of `False` in all methods. This allows a class that overrides `request_api` to
