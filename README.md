@@ -4,6 +4,8 @@
 
 We use it at [Bixoto](https://bixoto.com/) as a basis for JSON API clients such as [PyMagento][].
 
+It aims at factoring the common parts of these clients while staying very lightweight (<100 SLOC).
+
 [PyMagento]: https://github.com/Bixoto/PyMagento
 
 ## Features
