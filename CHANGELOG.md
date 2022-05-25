@@ -1,5 +1,10 @@
 # api-session Changelog
 
+## 1.3.1 (2022/05/25)
+
+* Add `none_on_empty` constructor and `get_json_api` optional argument to return `None` on empty bodies. This is
+  disabled by default so the current behavior doesn’t change.
+
 ## 1.3.0 (2022/04/21)
 
 * Move `api_session.READ_METHODS` to `APISession.READ_METHODS` to make it easier to override
