@@ -42,7 +42,7 @@ class APISession(requests.Session):
         # Override this method as needed
         response.raise_for_status()
 
-    def request(self, method: str, url: Union[str, bytes, Text], *args, bypass_read_only=False, **kwargs):
+    def request(self, method: Union[str, bytes], url: Union[str, bytes, Text], *args, bypass_read_only=False, **kwargs):
         """
         :param method: method argument passed to the underlying ``.request()`` method
         :param url: URL argument passed to the underlying ``.request()`` method
@@ -52,7 +52,7 @@ class APISession(requests.Session):
         :return:
         """
         if self.read_only and not bypass_read_only and method.upper() not in self.READ_METHODS:
-            raise AssertionError("Can't perform %s action in read-only mode!" % method)
+            raise AssertionError("Can't perform %r action in read-only mode!" % method)
         return super().request(method, url, *args, **kwargs)
 
     def request_api(self, method: str, path: str, *args, throw: Optional[bool] = None, **kwargs):
