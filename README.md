@@ -1,6 +1,6 @@
 # api-session
 
-**api-session** is a small module providing an extended `requests.Session` class to work with (JSON) APIs.
+**api-session** is a small module providing an extended `requests.Session` class to work with JSON APIs.
 
 We use it at [Bixoto](https://bixoto.com/) as a basis for JSON API clients such as [PyMagento][] or
 [PyBigBuy][].

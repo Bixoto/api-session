@@ -2,7 +2,7 @@ from typing import Optional, Union, Text, Dict, Any
 
 import requests
 
-__version__ = "1.3.1"
+__version__ = "1.3.2"
 
 # We can’t really do better than Any for now.
 # See https://github.com/python/typing/issues/182.
