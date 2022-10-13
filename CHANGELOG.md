@@ -1,5 +1,9 @@
 # api-session Changelog
 
+## 1.3.2 (2022/10/13)
+
+* Add `JSONDict` to type `dict`s from JSON responses.
+
 ## 1.3.1 (2022/05/25)
 
 * Add `none_on_empty` constructor and `get_json_api` optional argument to return `None` on empty bodies. This is

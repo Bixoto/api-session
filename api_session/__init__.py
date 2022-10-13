@@ -1,8 +1,12 @@
-from typing import Optional, Union, Text
+from typing import Optional, Union, Text, Dict, Any
 
 import requests
 
 __version__ = "1.3.1"
+
+# We can’t really do better than Any for now.
+# See https://github.com/python/typing/issues/182.
+JSONDict = Dict[str, Any]
 
 
 class APISession(requests.Session):
