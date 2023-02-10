@@ -18,7 +18,7 @@ python = "^3.8"
 requests = "^2.26.0"
 
 [tool.poetry.dev-dependencies]
-mypy = "^0"
+mypy = "^1"
 types-requests = "^2.25.9"
 pytest = "^6.2.5"
 pytest-cov = "^3.0.0"
