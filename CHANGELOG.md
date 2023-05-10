@@ -1,6 +1,6 @@
 # api-session Changelog
 
-## 1.3.3 (unreleased)
+## 1.3.3 (2023/05/10)
 
 * Add `offline` as an equivalent of `read_only` for all methods
 
