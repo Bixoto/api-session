@@ -1,5 +1,9 @@
 # api-session Changelog
 
+## 1.3.3 (unreleased)
+
+* Add `offline` as an equivalent of `read_only` for all methods
+
 ## 1.3.2 (2022/10/13)
 
 * Add `JSONDict` to type `dict`s from JSON responses.

@@ -12,6 +12,12 @@ def httpbin_session():
     return APISession("https://httpbin.org")
 
 
+def test_offline():
+    s = APISession("https://example.org", offline=True)
+    with pytest.raises(AssertionError):
+        s.get("/")
+
+
 def test_read_only():
     s = APISession("https://example.org", read_only=True)
 

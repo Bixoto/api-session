@@ -2,7 +2,7 @@ from typing import Optional, Union, Text, Dict, Any
 
 import requests
 
-__version__ = "1.3.2"
+__version__ = "1.3.3"
 
 # We can’t really do better than Any for now.
 # See https://github.com/python/typing/issues/182.
@@ -16,6 +16,7 @@ class APISession(requests.Session):
     READ_METHODS = {"HEAD", "GET", "OPTIONS", "CONNECT", "TRACE"}
 
     def __init__(self, base_url: str, user_agent: Optional[str] = None, read_only=False, *,
+                 offline=False,
                  none_on_404=True,
                  none_on_empty=False):
         """
@@ -31,6 +32,7 @@ class APISession(requests.Session):
 
         self.base_url = base_url.rstrip("/")
         self.read_only = read_only
+        self.offline = offline
         self.none_on_404 = none_on_404
         self.none_on_empty = none_on_empty
 
@@ -55,6 +57,9 @@ class APISession(requests.Session):
         :param kwargs: keyword arguments passed to the underlying ``.request()`` method
         :return:
         """
+        if self.offline:
+            raise AssertionError("Can't perform %r action in offline mode!" % method)
+
         if self.read_only and not bypass_read_only and method.upper() not in self.READ_METHODS:
             raise AssertionError("Can't perform %r action in read-only mode!" % method)
         return super().request(method, url, *args, **kwargs)
