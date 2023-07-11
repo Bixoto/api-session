@@ -8,7 +8,7 @@ from api_session import APISession
 
 @pytest.fixture()
 def httpbin_session():
-    return APISession("https://httpbin.org")
+    return APISession("https://httpbingo.org")
 
 
 def test_offline():
