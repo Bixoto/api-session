@@ -1,10 +1,9 @@
 from json import JSONDecodeError
 
+import pytest
 from requests import HTTPError
 
 from api_session import APISession
-
-import pytest
 
 
 @pytest.fixture()
