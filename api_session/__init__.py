@@ -131,7 +131,7 @@ class APISession(requests.Session):
         """
         Equivalent of .head() that prefixes the path with the base API URL.
 
-        :param path: path, starting with a slash
+        :param path: URL path. This must start with a slash
         :param params: query params
         :param throw: throw an exception on error
         :return: requests.Response object
@@ -147,6 +147,18 @@ class APISession(requests.Session):
         :return: requests.Response object
         """
         return self.request_api('post', path, *args, throw=throw, **kwargs)
+
+    def post_json_api(self, path: str, *args, throw=True, **kwargs):
+        """
+        Equivalent of ``.get_api()`` that parses a JSON response.
+
+        :param path: URL path. This must start with a slash
+        :param throw: if True, throw an exception on error. The default is ``True``, because in the case in which the
+          server doesn’t return JSON when there’s an error, this would fail at the JSON-decoding step, and mask the real
+          error. Use ``throw=False`` to disable this behavior.
+        :return:
+        """
+        return self.post_api(path, *args, throw=throw, **kwargs).json()
 
     def put_api(self, path: str, *args, throw: Optional[bool] = None, **kwargs):
         """

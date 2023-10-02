@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+* Add `post_json_api`
 * Add official support for Python 3.12
 
 ## 1.3.3 (2023/05/10)
