@@ -1,6 +1,6 @@
 # api-session Changelog
 
-## Unreleased
+## 1.3.5 (2023/11/15)
 
 * Add `max_retries` to the constructor
 
