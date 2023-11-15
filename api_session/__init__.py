@@ -3,7 +3,7 @@ from urllib3 import Timeout
 
 import requests
 
-__version__ = "1.3.3"
+__version__ = "1.3.4"
 
 # We can’t really do better than Any for now.
 # See https://github.com/python/typing/issues/182.

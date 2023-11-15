@@ -1,8 +1,9 @@
 # api-session Changelog
 
-## Unreleased
+## 1.3.4 (2023/11/15)
 
 * Add `post_json_api`
+* Add `timeout` to the constructor to specify a default timeout for all requests
 * Add official support for Python 3.12
 
 ## 1.3.3 (2023/05/10)
