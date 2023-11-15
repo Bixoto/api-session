@@ -1,4 +1,5 @@
-from typing import Optional, Union, Text, Dict, Any
+from typing import Optional, Union, Text, Dict, Any, Tuple
+from urllib3 import Timeout
 
 import requests
 
@@ -18,7 +19,8 @@ class APISession(requests.Session):
     def __init__(self, base_url: str, user_agent: Optional[str] = None, read_only=False, *,
                  offline=False,
                  none_on_404=True,
-                 none_on_empty=False):
+                 none_on_empty=False,
+                 timeout: Optional[Union[int, Tuple[int, int], Timeout]] = None):
         """
         :param base_url: Base URL of the API.
         :param user_agent: Optional user-agent header to use.
@@ -27,6 +29,7 @@ class APISession(requests.Session):
           be overridden by passing it explicitly when calling the method.
         :param none_on_empty: set the default for the argument of the same name in ``.get_json_api`` calls. This can
           still be overridden by passing it explicitly when calling the method.
+        :param timeout: default timeout to use for all requests
         """
         super().__init__()
 
@@ -35,6 +38,7 @@ class APISession(requests.Session):
         self.offline = offline
         self.none_on_404 = none_on_404
         self.none_on_empty = none_on_empty
+        self.timeout = timeout
 
         if user_agent is not None:
             self.headers['User-Agent'] = user_agent
@@ -62,6 +66,10 @@ class APISession(requests.Session):
 
         if self.read_only and not bypass_read_only and method.upper() not in self.READ_METHODS:
             raise AssertionError("Can't perform %r action in read-only mode!" % method)
+
+        if "timeout" not in kwargs and self.timeout is not None:
+            kwargs["timeout"] = self.timeout
+
         return super().request(method, url, *args, **kwargs)
 
     def request_api(self, method: str, path: str, *args, throw: Optional[bool] = None, **kwargs):
