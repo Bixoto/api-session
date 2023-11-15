@@ -1,7 +1,8 @@
 from typing import Optional, Union, Text, Dict, Any, Tuple
-from urllib3 import Timeout
 
 import requests
+from requests.adapters import HTTPAdapter
+from urllib3 import Timeout, Retry
 
 __version__ = "1.3.4"
 
@@ -20,7 +21,8 @@ class APISession(requests.Session):
                  offline=False,
                  none_on_404=True,
                  none_on_empty=False,
-                 timeout: Optional[Union[int, Tuple[int, int], Timeout]] = None):
+                 timeout: Optional[Union[int, Tuple[int, int], Timeout]] = None,
+                 max_retries: Optional[Union[int, bool, Retry]] = None):
         """
         :param base_url: Base URL of the API.
         :param user_agent: Optional user-agent header to use.
@@ -30,6 +32,7 @@ class APISession(requests.Session):
         :param none_on_empty: set the default for the argument of the same name in ``.get_json_api`` calls. This can
           still be overridden by passing it explicitly when calling the method.
         :param timeout: default timeout to use for all requests
+        :param max_retries: if set, the session mounts a ``HTTPAdapter`` with this parameter
         """
         super().__init__()
 
@@ -39,6 +42,11 @@ class APISession(requests.Session):
         self.none_on_404 = none_on_404
         self.none_on_empty = none_on_empty
         self.timeout = timeout
+
+        if max_retries is not None:
+            adapter = HTTPAdapter(max_retries=max_retries)
+            self.mount("https://", adapter)
+            self.mount("http://", adapter)
 
         if user_agent is not None:
             self.headers['User-Agent'] = user_agent

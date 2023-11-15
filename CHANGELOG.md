@@ -1,5 +1,9 @@
 # api-session Changelog
 
+## Unreleased
+
+* Add `max_retries` to the constructor
+
 ## 1.3.4 (2023/11/15)
 
 * Add `post_json_api`
