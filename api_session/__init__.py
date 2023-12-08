@@ -166,7 +166,7 @@ class APISession(requests.Session):
 
     def post_json_api(self, path: str, *args, throw=True, **kwargs):
         """
-        Equivalent of ``.get_api()`` that parses a JSON response.
+        Equivalent of ``.post_api()`` that parses a JSON response.
 
         :param path: URL path. This must start with a slash
         :param throw: if True, throw an exception on error. The default is ``True``, because in the case in which the

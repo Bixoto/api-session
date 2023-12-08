@@ -1,5 +1,9 @@
 # api-session Changelog
 
+## Unreleased
+
+* `post_json_api`: fix docstring
+
 ## 1.3.5 (2023/11/15)
 
 * Add `max_retries` to the constructor
