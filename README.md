@@ -21,6 +21,10 @@ It aims at factoring the common parts of these clients while staying very lightw
 
     pip install api-session
 
+Or with Poetry:
+
+    poetry add api-session
+
 Dependency: Python 3.8+.
 
 ## Usage
