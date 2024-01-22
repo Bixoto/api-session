@@ -3,6 +3,7 @@
 ## Unreleased
 
 * `post_json_api`: fix docstring
+* Add `put_json_api`, `patch_json_api`, `delete_json_api`
 
 ## 1.3.5 (2023/11/15)
 

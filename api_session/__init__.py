@@ -46,6 +46,7 @@ class APISession(requests.Session):
         if max_retries is not None:
             adapter = HTTPAdapter(max_retries=max_retries)
             self.mount("https://", adapter)
+            # noinspection HttpUrlsUsage
             self.mount("http://", adapter)
 
         if user_agent is not None:
@@ -170,7 +171,7 @@ class APISession(requests.Session):
 
         :param path: URL path. This must start with a slash
         :param throw: if True, throw an exception on error. The default is ``True``, because in the case in which the
-          server doesn’t return JSON when there’s an error, this would fail at the JSON-decoding step, and mask the real
+          server doesn’t return JSON when there’s an error, this would fail at the JSON-decoding step and mask the real
           error. Use ``throw=False`` to disable this behavior.
         :return:
         """
@@ -186,6 +187,18 @@ class APISession(requests.Session):
         """
         return self.request_api('put', path, *args, throw=throw, **kwargs)
 
+    def put_json_api(self, path: str, *args, throw=True, **kwargs):
+        """
+        Equivalent of ``.put_api()`` that parses a JSON response.
+
+        :param path: URL path. This must start with a slash
+        :param throw: if True, throw an exception on error. The default is ``True``, because in the case in which the
+          server doesn’t return JSON when there’s an error, this would fail at the JSON-decoding step and mask the real
+          error. Use ``throw=False`` to disable this behavior.
+        :return:
+        """
+        return self.put_api(path, *args, throw=throw, **kwargs).json()
+
     def patch_api(self, path: str, *args, throw: Optional[bool] = None, **kwargs):
         """
         Equivalent of .patch() that prefixes the path with the base API URL.
@@ -196,6 +209,18 @@ class APISession(requests.Session):
         """
         return self.request_api('patch', path, *args, throw=throw, **kwargs)
 
+    def patch_json_api(self, path: str, *args, throw=True, **kwargs):
+        """
+        Equivalent of ``.patch_api()`` that parses a JSON response.
+
+        :param path: URL path. This must start with a slash
+        :param throw: if True, throw an exception on error. The default is ``True``, because in the case in which the
+          server doesn’t return JSON when there’s an error, this would fail at the JSON-decoding step and mask the real
+          error. Use ``throw=False`` to disable this behavior.
+        :return:
+        """
+        return self.patch_api(path, *args, throw=throw, **kwargs).json()
+
     def delete_api(self, path: str, throw: Optional[bool] = None, **kwargs):
         """
         Equivalent of .delete() that prefixes the path with the base API URL.
@@ -205,3 +230,15 @@ class APISession(requests.Session):
         :return: requests.Response object
         """
         return self.request_api('delete', path, throw=throw, **kwargs)
+
+    def delete_json_api(self, path: str, throw=True, **kwargs):
+        """
+        Equivalent of ``.delete_api()`` that parses a JSON response.
+
+        :param path: URL path. This must start with a slash
+        :param throw: if True, throw an exception on error. The default is ``True``, because in the case in which the
+          server doesn’t return JSON when there’s an error, this would fail at the JSON-decoding step and mask the real
+          error. Use ``throw=False`` to disable this behavior.
+        :return:
+        """
+        return self.delete_api(path, throw=throw, **kwargs).json()
