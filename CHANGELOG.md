@@ -1,6 +1,6 @@
 # api-session Changelog
 
-## Unreleased
+## 1.3.6 (2024/01/22)
 
 * `post_json_api`: fix docstring
 * Add `put_json_api`, `patch_json_api`, `delete_json_api`

@@ -4,7 +4,7 @@ import requests
 from requests.adapters import HTTPAdapter
 from urllib3 import Timeout, Retry
 
-__version__ = "1.3.5"
+__version__ = "1.3.6"
 
 # We can’t really do better than Any for now.
 # See https://github.com/python/typing/issues/182.
