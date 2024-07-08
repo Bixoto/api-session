@@ -38,17 +38,26 @@ def test_user_agent():
     assert s.headers.get("user-agent") == "Foo"
 
 
-def test_raise_for_response(httpbin_session):
+def test_raise_for_response_4xx(httpbin_session):
     response = httpbin_session.get_api("/status/403")
     assert response.status_code == 403
-    with pytest.raises(HTTPError):
+    with pytest.raises(HTTPError, match=r".*Body:.*"):
         httpbin_session.raise_for_response(response)
+
+
+def test_raise_for_response_5xx(httpbin_session):
+    response = httpbin_session.get_api("/status/500")
+    assert response.status_code == 500
+    with pytest.raises(HTTPError) as exc_info:
+        httpbin_session.raise_for_response(response)
+
+    assert "Body:" not in exc_info.value.args[0]
 
 
 def test_throw(httpbin_session):
     for method in (httpbin_session.get_api, httpbin_session.post_api, httpbin_session.put_api,
                    httpbin_session.patch_api, httpbin_session.delete_api, httpbin_session.head_api):
-        with pytest.raises(HTTPError):
+        with pytest.raises(HTTPError, match=r".*Body:.*"):
             method("/status/403", throw=True)
 
         assert method("/status/200", throw=True).ok
