@@ -1,6 +1,6 @@
 # api-session Changelog
 
-## 1.4.0 (Unreleased)
+## 1.4.0 (2024/07/08)
 
 * Change the default `raise_for_response` implementation to include the response body in the error message if the status
   is 4xx. This criterion can be changed by overriding the new method `include_body_in_exception`. One can also override

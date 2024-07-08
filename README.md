@@ -16,6 +16,7 @@ It aims at factoring the common parts of these clients while staying very lightw
 * read-only flag: if given, prevents the API from doing `POST` and similar calls
 * offline flag: if given, prevents the API from doing any call. This is useful for tests.
 * `requests.Session` inheritance: the class inherits from `requests.Session`, so it stays 100% compatible with it
+* (since 1.4) Response bodies are included in exception messages for 4xx errors. This behavior can be customized.
 
 ## Install
 
