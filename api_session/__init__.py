@@ -1,6 +1,7 @@
 from typing import Optional, Union, Text, Dict, Any, Tuple
 
 import requests
+from requests import HTTPError
 from requests.adapters import HTTPAdapter
 from urllib3 import Timeout, Retry
 
@@ -56,10 +57,29 @@ class APISession(requests.Session):
     def raise_for_response(self, response: requests.Response):
         """
         Raise an exception if the response is an error.
-        This defaults to `response.raise_for_status` but can be overridden.
+
+        The default implementation wraps `response.raise_for_status`, and if `include_body_in_exception(response)` is
+        `True`, it appends the response body to the error message.
         """
-        # Override this method as needed
-        response.raise_for_status()
+        try:
+            response.raise_for_status()
+        except HTTPError as ex:
+            if self.include_body_in_exception(response):
+                raise HTTPError(
+                    str(ex) + f". Body: {response.text}"
+                ) from ex.__cause__
+            raise
+
+    # noinspection PyMethodMayBeStatic
+    def include_body_in_exception(self, response: requests.Response) -> bool:
+        """
+        Test if the exception for this response should include the response body in its message string.
+        The default exception messages from `requests` don't include the body of the response, but this often contains
+        more information about the error.
+
+        By default, this tests if the status code is 4xx.
+        """
+        return response.status_code // 100 == 4
 
     def request(self, method: Union[str, bytes], url: Union[str, bytes, Text], *args, bypass_read_only=False, **kwargs):
         """

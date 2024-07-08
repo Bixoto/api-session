@@ -1,5 +1,11 @@
 # api-session Changelog
 
+## 1.4.0 (Unreleased)
+
+* Change the default `raise_for_response` implementation to include the response body in the error message if the status
+  is 4xx. This criterion can be changed by overriding the new method `include_body_in_exception`. One can also override
+  `raise_for_response` to completely customize the exceptions raised by the library.
+
 ## 1.3.6 (2024/01/22)
 
 * `post_json_api`: fix docstring
