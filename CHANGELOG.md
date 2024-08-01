@@ -1,5 +1,9 @@
 # api-session Changelog
 
+## 1.4.1 (2024/08/01)
+
+* Fix the missing `response` (and `request`) attributes on the `HTTPError`s re-raised in `raise_for_response`
+
 ## 1.4.0 (2024/07/08)
 
 * Change the default `raise_for_response` implementation to include the response body in the error message if the status
