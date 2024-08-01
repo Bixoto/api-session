@@ -66,7 +66,9 @@ class APISession(requests.Session):
         except HTTPError as ex:
             if self.include_body_in_exception(response):
                 raise HTTPError(
-                    str(ex) + f". Body: {response.text}"
+                    str(ex) + f". Body: {response.text}",
+                    response=response,
+                    request=ex.request,
                 ) from ex.__cause__
             raise
 
