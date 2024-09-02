@@ -1,4 +1,5 @@
 from typing import Optional, Union, Text, Dict, Any, Tuple
+from urllib.parse import quote as urlquote
 
 import requests
 from requests import HTTPError
@@ -6,10 +7,21 @@ from requests.adapters import HTTPAdapter
 from urllib3 import Timeout, Retry
 
 __version__ = "1.4.1"
+__all__ = (
+    "__version__",
+    "JSONDict",
+    "escape_path",
+    "APISession",
+)
 
 # We can’t really do better than Any for now.
 # See https://github.com/python/typing/issues/182.
 JSONDict = Dict[str, Any]
+
+
+def escape_path(x: Any, *, safe=""):
+    """Escape some value for inclusion in a URL path."""
+    return urlquote(str(x), safe=safe)
 
 
 class APISession(requests.Session):
