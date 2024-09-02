@@ -1,10 +1,11 @@
 # api-session Changelog
 
-## Unreleased
+## 1.4.2 (2024/09/02)
 
 * Add `escape_path` helper
 * Add Python 3.13 support
 * Declare `__all__` not to expose imports
+* Relax `requests` dependency
 
 ## 1.4.1 (2024/08/01)
 
