@@ -1,5 +1,11 @@
 # api-session Changelog
 
+## Unreleased
+
+* Add `escape_path` helper
+* Add Python 3.13 support
+* Declare `__all__` not to expose imports
+
 ## 1.4.1 (2024/08/01)
 
 * Fix the missing `response` (and `request`) attributes on the `HTTPError`s re-raised in `raise_for_response`
