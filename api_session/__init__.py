@@ -25,9 +25,7 @@ def escape_path(x: Any, *, safe=""):
 
 
 class APISession(requests.Session):
-    """
-    HTTP Session with helpers to call a JSON-based API.
-    """
+    """HTTP Session with helpers to call a JSON-based API."""
     READ_METHODS = {"HEAD", "GET", "OPTIONS", "CONNECT", "TRACE"}
 
     def __init__(self, base_url: str, user_agent: Optional[str] = None, read_only=False, *,
@@ -36,8 +34,7 @@ class APISession(requests.Session):
                  none_on_empty=False,
                  timeout: Optional[Union[int, Tuple[int, int], Timeout]] = None,
                  max_retries: Optional[Union[int, bool, Retry]] = None):
-        """
-        :param base_url: Base URL of the API.
+        """:param base_url: Base URL of the API.
         :param user_agent: Optional user-agent header to use.
         :param read_only: if True, any POST/PUT/DELETE call will fail with an AssertError.
         :param none_on_404: set the default for the argument of the same name in ``.get_json_api`` calls. This can still
@@ -66,9 +63,8 @@ class APISession(requests.Session):
             self.headers['User-Agent'] = user_agent
 
     # noinspection PyMethodMayBeStatic
-    def raise_for_response(self, response: requests.Response):
-        """
-        Raise an exception if the response is an error.
+    def raise_for_response(self, response: requests.Response) -> None:
+        """Raise an exception if the response is an error.
 
         The default implementation wraps `response.raise_for_status`, and if `include_body_in_exception(response)` is
         `True`, it appends the response body to the error message.
@@ -86,8 +82,7 @@ class APISession(requests.Session):
 
     # noinspection PyMethodMayBeStatic
     def include_body_in_exception(self, response: requests.Response) -> bool:
-        """
-        Test if the exception for this response should include the response body in its message string.
+        """Test if the exception for this response should include the response body in its message string.
         The default exception messages from `requests` don't include the body of the response, but this often contains
         more information about the error.
 
@@ -95,9 +90,9 @@ class APISession(requests.Session):
         """
         return response.status_code // 100 == 4
 
-    def request(self, method: Union[str, bytes], url: Union[str, bytes, Text], *args, bypass_read_only=False, **kwargs):
-        """
-        :param method: method argument passed to the underlying ``.request()`` method
+    def request(self, method: Union[str, bytes], url: Union[str, bytes, Text], *args: Any, bypass_read_only=False,
+                **kwargs: Any) -> requests.Response:
+        """:param method: method argument passed to the underlying ``.request()`` method
         :param url: URL argument passed to the underlying ``.request()`` method
         :param args: arguments passed to the underlying ``.request()`` method
         :param bypass_read_only: if True, ignore the ``.read_only`` attribute
@@ -115,9 +110,9 @@ class APISession(requests.Session):
 
         return super().request(method, url, *args, **kwargs)
 
-    def request_api(self, method: str, path: str, *args, throw: Optional[bool] = None, **kwargs):
-        """
-        Wrapper around .request() that prefixes the path with the base API URL.
+    def request_api(self, method: str, path: str, *args: Any, throw: Optional[bool] = None,
+                    **kwargs: Any) -> requests.Response:
+        """Wrapper around .request() that prefixes the path with the base API URL.
 
         :param method: HTTP method
         :param path: API path. This must start with "/"
@@ -135,9 +130,9 @@ class APISession(requests.Session):
             self.raise_for_response(r)
         return r
 
-    def get_api(self, path: str, params: Optional[dict] = None, *, throw: Optional[bool] = None, **kwargs):
-        """
-        Equivalent of .get() that prefixes the path with the base API URL.
+    def get_api(self, path: str, params: Optional[dict] = None, *, throw: Optional[bool] = None,
+                **kwargs: Any) -> requests.Response:
+        """Equivalent of .get() that prefixes the path with the base API URL.
 
         :param path: path, starting with a slash
         :param params: GET params
@@ -147,12 +142,11 @@ class APISession(requests.Session):
         return self.request_api('get', path, params=params, throw=throw, **kwargs)
 
     def get_json_api(self, path: str, params: Optional[dict] = None, *,
-                     throw=True,
+                     throw: bool = True,
                      none_on_404: Optional[bool] = None,
                      none_on_empty: Optional[bool] = None,
-                     **kwargs):
-        """
-        Equivalent of ``.get_api()`` that parses a JSON response. Return ``None`` on 404s and throws on other errors.
+                     **kwargs: Any) -> Any:
+        """Equivalent of ``.get_api()`` that parses a JSON response. Return ``None`` on 404s and throws on other errors.
 
         :param path: URL path. This must start with a slash
         :param params: query params
@@ -178,9 +172,9 @@ class APISession(requests.Session):
 
         return r.json()
 
-    def head_api(self, path: str, params: Optional[dict] = None, *, throw: Optional[bool] = None, **kwargs):
-        """
-        Equivalent of .head() that prefixes the path with the base API URL.
+    def head_api(self, path: str, params: Optional[dict] = None, *, throw: Optional[bool] = None,
+                 **kwargs: Any) -> requests.Response:
+        """Equivalent of .head() that prefixes the path with the base API URL.
 
         :param path: URL path. This must start with a slash
         :param params: query params
@@ -189,9 +183,8 @@ class APISession(requests.Session):
         """
         return self.request_api('head', path, params=params, throw=throw, **kwargs)
 
-    def post_api(self, path: str, *args, throw: Optional[bool] = None, **kwargs):
-        """
-        Equivalent of .post() that prefixes the path with the base API URL.
+    def post_api(self, path: str, *args: Any, throw: Optional[bool] = None, **kwargs: Any) -> requests.Response:
+        """Equivalent of .post() that prefixes the path with the base API URL.
 
         :param path: URL path. This must start with a slash
         :param throw: if True, throw an exception on error
@@ -199,9 +192,8 @@ class APISession(requests.Session):
         """
         return self.request_api('post', path, *args, throw=throw, **kwargs)
 
-    def post_json_api(self, path: str, *args, throw=True, **kwargs):
-        """
-        Equivalent of ``.post_api()`` that parses a JSON response.
+    def post_json_api(self, path: str, *args: Any, throw=True, **kwargs: Any) -> Any:
+        """Equivalent of ``.post_api()`` that parses a JSON response.
 
         :param path: URL path. This must start with a slash
         :param throw: if True, throw an exception on error. The default is ``True``, because in the case in which the
@@ -211,9 +203,8 @@ class APISession(requests.Session):
         """
         return self.post_api(path, *args, throw=throw, **kwargs).json()
 
-    def put_api(self, path: str, *args, throw: Optional[bool] = None, **kwargs):
-        """
-        Equivalent of .put() that prefixes the path with the base API URL.
+    def put_api(self, path: str, *args: Any, throw: Optional[bool] = None, **kwargs: Any) -> requests.Response:
+        """Equivalent of .put() that prefixes the path with the base API URL.
 
         :param path: URL path. This must start with a slash
         :param throw: if True, throw an exception on error
@@ -221,9 +212,8 @@ class APISession(requests.Session):
         """
         return self.request_api('put', path, *args, throw=throw, **kwargs)
 
-    def put_json_api(self, path: str, *args, throw=True, **kwargs):
-        """
-        Equivalent of ``.put_api()`` that parses a JSON response.
+    def put_json_api(self, path: str, *args: Any, throw=True, **kwargs: Any) -> Any:
+        """Equivalent of ``.put_api()`` that parses a JSON response.
 
         :param path: URL path. This must start with a slash
         :param throw: if True, throw an exception on error. The default is ``True``, because in the case in which the
@@ -233,9 +223,8 @@ class APISession(requests.Session):
         """
         return self.put_api(path, *args, throw=throw, **kwargs).json()
 
-    def patch_api(self, path: str, *args, throw: Optional[bool] = None, **kwargs):
-        """
-        Equivalent of .patch() that prefixes the path with the base API URL.
+    def patch_api(self, path: str, *args: Any, throw: Optional[bool] = None, **kwargs: Any) -> requests.Response:
+        """Equivalent of .patch() that prefixes the path with the base API URL.
 
         :param path: URL path. This must start with a slash
         :param throw: if True, throw an exception on error
@@ -243,9 +232,8 @@ class APISession(requests.Session):
         """
         return self.request_api('patch', path, *args, throw=throw, **kwargs)
 
-    def patch_json_api(self, path: str, *args, throw=True, **kwargs):
-        """
-        Equivalent of ``.patch_api()`` that parses a JSON response.
+    def patch_json_api(self, path: str, *args: Any, throw=True, **kwargs: Any) -> Any:
+        """Equivalent of ``.patch_api()`` that parses a JSON response.
 
         :param path: URL path. This must start with a slash
         :param throw: if True, throw an exception on error. The default is ``True``, because in the case in which the
@@ -255,9 +243,8 @@ class APISession(requests.Session):
         """
         return self.patch_api(path, *args, throw=throw, **kwargs).json()
 
-    def delete_api(self, path: str, throw: Optional[bool] = None, **kwargs):
-        """
-        Equivalent of .delete() that prefixes the path with the base API URL.
+    def delete_api(self, path: str, throw: Optional[bool] = None, **kwargs: Any) -> requests.Response:
+        """Equivalent of .delete() that prefixes the path with the base API URL.
 
         :param path: URL path. This must start with a slash
         :param throw: if True, throw an exception on error
@@ -265,9 +252,8 @@ class APISession(requests.Session):
         """
         return self.request_api('delete', path, throw=throw, **kwargs)
 
-    def delete_json_api(self, path: str, throw=True, **kwargs):
-        """
-        Equivalent of ``.delete_api()`` that parses a JSON response.
+    def delete_json_api(self, path: str, throw=True, **kwargs: Any) -> Any:
+        """Equivalent of ``.delete_api()`` that parses a JSON response.
 
         :param path: URL path. This must start with a slash
         :param throw: if True, throw an exception on error. The default is ``True``, because in the case in which the
