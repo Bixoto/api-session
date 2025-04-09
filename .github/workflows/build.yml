@@ -33,13 +33,9 @@ jobs:
         run: |
           poetry install
 
-      - name: Lint with Mypy
+      - name: Test
         run: |
-          poetry run mypy api_session
-
-      - name: Run Tests
-        run: |
-          poetry run pytest -v
+          ./ci.sh
 
       - name: Test build
         run: |
