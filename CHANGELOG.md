@@ -1,5 +1,9 @@
 # api-session Changelog
 
+## 1.4.3 (2025/04/09)
+
+* Add explicit types for Mypy
+
 ## 1.4.2 (2024/09/02)
 
 * Add `escape_path` helper
