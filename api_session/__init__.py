@@ -6,7 +6,7 @@ from requests import HTTPError
 from requests.adapters import HTTPAdapter
 from urllib3 import Timeout, Retry
 
-__version__ = "1.4.3"
+__version__ = "1.5.0"
 __all__ = (
     "__version__",
     "JSONDict",

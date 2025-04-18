@@ -1,5 +1,9 @@
 # api-session Changelog
 
+## 1.5.0 (2025/04/18)
+
+* Drop support for Python 3.8
+
 ## 1.4.3 (2025/04/09)
 
 * Add explicit types for Mypy

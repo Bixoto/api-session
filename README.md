@@ -26,7 +26,7 @@ Or with Poetry:
 
     poetry add api-session
 
-Dependency: Python 3.8+.
+Dependency: Python 3.9+.
 
 ## Usage
 
