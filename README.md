@@ -2,8 +2,7 @@
 
 **api-session** is a small module providing an extended `requests.Session` class to work with JSON APIs.
 
-We use it at [Bixoto](https://bixoto.com/) as a basis for JSON API clients such as [PyMagento][] or
-[PyBigBuy][].
+We use it at [Bixoto](https://bixoto.com/) as a basis for JSON API clients such as [PyMagento][] or [PyBigBuy][].
 
 It aims at factoring the common parts of these clients while staying very lightweight (<100 SLOC).
 
@@ -27,6 +26,9 @@ Or with Poetry:
     poetry add api-session
 
 Dependency: Python 3.9+.
+
+* Versions 1.5.x require Python 3.9+
+* Versions 1.4.x and before require Python 3.8+
 
 ## Usage
 
