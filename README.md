@@ -12,11 +12,11 @@ It aims at factoring the common parts of these clients while staying very lightw
 
 ## Features
 
-* base URL: the base API URL is given only once on object creation; subsequent calls use `.get("/path")`
-* read-only flag: if given, prevents the API from doing `POST` and similar calls
-* offline flag: if given, prevents the API from doing any call. This is useful for tests.
+* Base URL: the base API URL is given only once on object creation; subsequent calls use `.get("/path")`
+* Read-only flag: if given, prevents the API from doing `POST` and similar calls
+* Offline flag: if given, prevents the API from doing any call. This is useful for tests.
 * `requests.Session` inheritance: the class inherits from `requests.Session`, so it stays 100% compatible with it
-* (since 1.4) Response bodies are included in exception messages for 4xx errors. This behavior can be customized.
+* Response bodies are included in exception messages for 4xx errors. This behavior can be customized.
 
 ## Install
 
