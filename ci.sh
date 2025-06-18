@@ -11,5 +11,5 @@ if [ -n "$BRANCHCOV" ]; then
 fi
 
 poetry run ruff check api_session
-poetry run mypy --check-untyped-defs --explicit-package-bases ./*.py api_session/*.py
+poetry run mypy --strict --check-untyped-defs --explicit-package-bases ./*.py api_session/*.py
 poetry run pytest --cov=. $COV_ARGS tests/
