@@ -1,5 +1,9 @@
 # api-session Changelog
 
+## 1.5.1 (2025/06/18)
+
+* Add strict type hints
+
 ## 1.5.0 (2025/04/18)
 
 * Drop support for Python 3.8
