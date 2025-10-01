@@ -1,5 +1,9 @@
 # api-session Changelog
 
+## 1.5.2 (2025/10/01)
+
+* Relax the Python requirement to avoid Poetry errors with `api-session requires Python <4.0,>=3.9`
+
 ## 1.5.1 (2025/06/18)
 
 * Add strict type hints
