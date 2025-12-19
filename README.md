@@ -7,6 +7,7 @@ We use it at [Bixoto](https://bixoto.com/) as a basis for JSON API clients such 
 It aims at factoring the common parts of these clients while staying very lightweight (<100 SLOC).
 
 [PyMagento]: https://github.com/Bixoto/PyMagento
+
 [PyBigBuy]: https://github.com/Bixoto/PyBigBuy
 
 ## Features
@@ -39,4 +40,36 @@ client = APISession("https://httpbin.org")
 
 client.get_json_api("/get")
 # => {...}
+```
+
+A typical usage is to inherit from the session to implement an API client class:
+
+```python3
+from typing import Any, cast
+
+from api_session import APISession
+
+
+class FooApiClient(APISession):
+    def __init__(
+            self,
+            token: str,
+            **kwargs: Any,
+    ):
+        super().__init__(base_url="https://foo-api.example.com/v1", **kwargs)
+        self.headers["Authorization"] = f"Bearer {token}"
+
+    def get_stuff(self) -> list[dict[str, Any]]:
+        return cast(list[dict[str, Any]],
+                    self.get_json_api("/get-stuff"))
+
+    def create_stuff(self, stuff: dict[str, Any]) -> bool:
+        return cast(bool, self.post_json_api("/create-stuff", json=stuff))
+
+
+# Then use it:
+my_client = FooApiClient("my-token")
+my_client.create_stuff({"foo": "bar"})  # => True
+for stuff in my_client.get_stuff():
+    print(stuff)
 ```
