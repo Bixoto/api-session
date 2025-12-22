@@ -1,6 +1,6 @@
 [project]
 name = "api-session"
-version = "1.5.2"
+version = "1.5.3"
 description = "requests.Session to work with JSON APIs"
 authors = [{ name = "Baptiste Fontaine", email = "baptiste@bixoto.com" }]
 requires-python = ">=3.9"

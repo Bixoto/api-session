@@ -5,7 +5,7 @@ from typing import Optional, Union, Text, Dict, Any, Tuple
 from urllib.parse import quote as urlquote
 from urllib3 import Timeout, Retry
 
-__version__ = "1.5.2"
+__version__ = "1.5.3"
 __all__ = (
     "__version__",
     "JSONDict",

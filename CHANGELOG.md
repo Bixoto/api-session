@@ -1,8 +1,8 @@
 # api-session Changelog
 
-## 1.5.3
+## 1.5.3 (2025/12/22)
 
-* We now use `uv` to manage the project instead of Poetry. This shouldn’t have any outside impact.
+* We now use `uv` to manage the project instead of Poetry. This has no impact on the released library.
 
 ## 1.5.2 (2025/10/01)
 
