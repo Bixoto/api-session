@@ -10,6 +10,6 @@ if [ -n "$BRANCHCOV" ]; then
   COV_ARGS="$COV_ARGS --cov-branch"
 fi
 
-poetry run ruff check api_session
-poetry run mypy --strict --check-untyped-defs --explicit-package-bases ./*.py api_session/*.py
-poetry run pytest --cov=. $COV_ARGS tests/
+uv run ruff check api_session
+uv run mypy --strict --check-untyped-defs --explicit-package-bases ./*.py api_session/*.py
+uv run pytest --cov=. $COV_ARGS tests/

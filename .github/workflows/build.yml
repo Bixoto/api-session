@@ -19,20 +19,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
 
-      - name: Install Poetry
+      - name: Install uv
         run: |
-          pipx install poetry
+          pipx install uv
 
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v6
+      - name: Set up uv and Python ${{ matrix.python-version }}
+        uses: astral-sh/setup-uv@v7
         with:
           python-version: ${{ matrix.python-version }}
-          allow-prereleases: true
-          cache: 'poetry'
 
       - name: Install dependencies
         run: |
-          poetry install
+          uv sync --frozen
 
       - name: Test
         run: |
@@ -40,4 +38,4 @@ jobs:
 
       - name: Test build
         run: |
-          poetry build
+          uv build
