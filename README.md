@@ -22,9 +22,13 @@ It aims at factoring the common parts of these clients while staying very lightw
 
     pip install api-session
 
-Or with Poetry:
+With Poetry:
 
     poetry add api-session
+
+With uv:
+
+    uv add api-session
 
 Dependency: Python 3.9+.
 
