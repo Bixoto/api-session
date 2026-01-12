@@ -1,6 +1,6 @@
 # api-session
 
-**api-session** is a small module providing an extended `requests.Session` class to work with JSON APIs.
+**api-session** is a small module providing an extended [`requests.Session`](https://requests.readthedocs.io/en/latest/user/advanced/#session-objects) class to work with JSON APIs.
 
 It aims at factoring the common parts of these clients while staying very lightweight (<100 SLOC). It only _augments_
 the `requests.Session` class, so the base methods are still available.
@@ -61,7 +61,7 @@ client.put_api("/foo")      # PUT https://httpbin.org/foo
 client.delete_api("/foo")   # DELETE https://httpbin.org/foo
 client.options_api("/foo")  # OPTIONS https://httpbin.org/foo
 
-# For JSON API, use the _*_json_api methods. They call `.json()` on the response, so you don’t have to:
+# For JSON API, use the _*_json_api methods. They call `.json()` on the response:
 client.get_json_api("/foo")    # equivalent of client.get("https://httpbin.org/foo").json()
 client.post_json_api("/bar")   # equivalent of client.post("https://httpbin.org/bar").json()
 client.put_json_api("/baz")    # equivalent of client.put("https://httpbin.org/baz").json()
@@ -95,3 +95,9 @@ my_client.create_stuff({"foo": "bar"})  # => True
 for thing in my_client.get_stuff():
     print(thing)
 ```
+
+## FAQ
+
+### What about cookies?
+
+Cookies are persisted in the session object, just like with [`requests.Session`](https://requests.readthedocs.io/en/latest/user/advanced/#session-objects).
