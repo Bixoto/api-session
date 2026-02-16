@@ -5,11 +5,9 @@
 It aims at factoring the common parts of these clients while staying very lightweight (<100 SLOC). It only _augments_
 the `requests.Session` class, so the base methods are still available.
 
-We use it at [Bixoto](https://bixoto.com/) as a basis for JSON API clients such as [PyMagento][] or [PyBigBuy][].
+We use it at [Bixoto](https://bixoto.com/) as a basis for JSON API clients such as [PyMagento][].
 
 [PyMagento]: https://github.com/Bixoto/PyMagento
-
-[PyBigBuy]: https://github.com/Bixoto/PyBigBuy
 
 ## Features
 
@@ -43,6 +41,8 @@ from api_session import APISession
 
 # The only requirement is to pass the base URL of the API you want to use.
 # This does not prevent you from calling other URLs.
+#
+# Remember this is just an augmented `requests.Session()` object.
 client = APISession("https://httpbin.org")
 
 # All requests methods are available:
