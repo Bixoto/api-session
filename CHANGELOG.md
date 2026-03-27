@@ -1,8 +1,19 @@
 # api-session Changelog
 
-## 1.6.1
+## 1.7.0 (2026/03/07)
+
+This release enables auto-retry by default. If `max_retries` is not set, it defaults to a `Retry` object with the
+settings from `self.DEFAULT_RETRY_PARAMS` and `self.READ_METHODS`.
+
+To opt out of the new auto-retry behavior, either override `DEFAULT_RETRY_PARAMS` to set it to `None`, or pass
+`max_retries=None`.
+
+Other changes:
 
 * Require `requests` 2.33+
+* Fix the typing of `max_retries` to reject booleans
+* Expose the adapter’s `max_retries` as `self.max_retries`
+* Type the attributes
 
 ## 1.6.0 (2026/03/27)
 

@@ -24,16 +24,20 @@ def escape_path(x: Any, *, safe: str = "") -> str:
     return urlquote(str(x), safe=safe)
 
 
+_none = object()
+
+
 class APISession(requests.Session):
     """HTTP Session with helpers to call a JSON-based API."""
-    READ_METHODS = {"HEAD", "GET", "OPTIONS", "CONNECT", "TRACE"}
+    READ_METHODS: set[str] = {"HEAD", "GET", "OPTIONS", "CONNECT", "TRACE"}
+    DEFAULT_RETRY_PARAMS: dict[str, Any] | None = {"total": 5, "backoff_factor": 0.2, "raise_on_status": False}
 
     def __init__(self, base_url: str, user_agent: str | None = None, read_only: bool = False, *,
                  offline: bool = False,
                  none_on_404: bool = True,
                  none_on_empty: bool = False,
                  timeout: int | tuple[int, int] | Timeout | None = None,
-                 max_retries: int | bool | Retry | None = None):
+                 max_retries: int | Retry | object | None = _none):
         """:param base_url: Base URL of the API.
         :param user_agent: Optional user-agent header to use.
         :param read_only: if True, any POST/PUT/DELETE call will fail with an AssertError.
@@ -46,18 +50,29 @@ class APISession(requests.Session):
         """
         super().__init__()
 
-        self.base_url = base_url.rstrip("/")
-        self.read_only = read_only
-        self.offline = offline
-        self.none_on_404 = none_on_404
-        self.none_on_empty = none_on_empty
-        self.timeout = timeout
+        self.base_url: str = base_url.rstrip("/")
+        self.read_only: bool = read_only
+        self.offline: bool = offline
+        self.none_on_404: bool = none_on_404
+        self.none_on_empty: bool = none_on_empty
+        self.timeout: int | tuple[int, int] | Timeout | None = timeout
+
+        if max_retries is _none and self.DEFAULT_RETRY_PARAMS is not None:
+            params = self.DEFAULT_RETRY_PARAMS.copy()
+            params.setdefault("allowed_methods", self.READ_METHODS)
+            max_retries = Retry(**params)
 
         if max_retries is not None:
+            assert isinstance(max_retries, (int, Retry)), "max_retries must be an int or a Retry object"
             adapter = HTTPAdapter(max_retries=max_retries)
             self.mount("https://", adapter)
             # noinspection HttpUrlsUsage
             self.mount("http://", adapter)
+            # IJ thinks this can be an int
+            # noinspection PyTypeChecker
+            self.max_retries: Retry | None = adapter.max_retries
+        else:
+            self.max_retries = None
 
         if user_agent is not None:
             self.headers['User-Agent'] = user_agent

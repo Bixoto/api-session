@@ -31,9 +31,9 @@ With Poetry:
 
 Dependency: Python 3.10+.
 
-* Versions 1.6.x require Python 3.10+
+* Versions 1.6.x and above require Python 3.10+
 * Versions 1.5.x require Python 3.9+
-* Versions 1.4.x and before require Python 3.8+
+* Versions 1.4.x and below require Python 3.8+
 
 ## Usage
 
