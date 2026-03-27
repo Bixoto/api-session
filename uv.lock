@@ -4,7 +4,7 @@ requires-python = ">=3.10"
 
 [[package]]
 name = "api-session"
-version = "1.5.3"
+version = "1.6.0"
 source = { editable = "." }
 dependencies = [
     { name = "requests" },
@@ -21,7 +21,7 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "requests", specifier = ">=2.26,<3" }]
+requires-dist = [{ name = "requests", specifier = ">=2.33,<3" }]
 
 [package.metadata.requires-dev]
 dev = [

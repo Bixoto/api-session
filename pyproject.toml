@@ -11,7 +11,7 @@ classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Programming Language :: Python :: 3",
 ]
-dependencies = ["requests>=2.26,<3"]
+dependencies = ["requests>=2.33,<3"]
 
 [project.urls]
 Homepage = "https://github.com/Bixoto/api-session"
