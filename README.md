@@ -29,8 +29,9 @@ With Poetry:
 
     poetry add api-session
 
-Dependency: Python 3.9+.
+Dependency: Python 3.10+.
 
+* Versions 1.6.x require Python 3.10+
 * Versions 1.5.x require Python 3.9+
 * Versions 1.4.x and before require Python 3.8+
 

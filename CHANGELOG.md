@@ -1,5 +1,9 @@
 # api-session Changelog
 
+## 1.6.0
+
+* Drop support for Python 3.9
+
 ## 1.5.3 (2025/12/22)
 
 * We now use `uv` to manage the project instead of Poetry. This has no impact on the released library.
