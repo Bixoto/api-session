@@ -21,7 +21,7 @@ dev = [
     "mypy>=1,<2",
     "types-requests",
     "pytest>=8,<9",
-    "pytest-cov>=5,<6",
+    "pytest-cov>=7,<8",
     "ruff>=0,<1",
     "types-urllib3",
 ]
