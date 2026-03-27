@@ -1,4 +1,4 @@
-from typing import Optional, Union, Any
+from typing import Any
 from urllib.parse import quote as urlquote
 
 import requests
@@ -6,7 +6,7 @@ from requests import HTTPError
 from requests.adapters import HTTPAdapter
 from urllib3 import Timeout, Retry
 
-__version__ = "1.5.3"
+__version__ = "1.6.0"
 __all__ = (
     "__version__",
     "JSONDict",

@@ -1,6 +1,6 @@
 # api-session Changelog
 
-## 1.6.0
+## 1.6.0 (2026/03/27)
 
 * Drop support for Python 3.9
 
