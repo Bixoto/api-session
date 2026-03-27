@@ -43,9 +43,28 @@ exclude_lines = [
 
 [tool.ruff]
 line-length = 120
+target-version = "py39"
 [tool.ruff.lint]
 select = [
     "D", # docstrings
+    "PERF", # Performance
+    "W",
+    "F",
+    "UP", # deprecated Python
+    # Flake8
+    "A",
+    "ASYNC",
+    "B",
+    "C4",
+    "PIE800",
+    "PT",
+    "SIM",
+    "SLOT",
+    "YTT",
+
+    "PLE",
+    "FURB",
+    "PLC0207",
 ]
 ignore = [
     "D100", # "Missing docstring in public module"
@@ -65,3 +84,7 @@ ignore = [
     "E501", # line too long
     "F401", # "unused" imports
 ]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*.py" = ["D"]
+"conftest.py" = ["D"]
