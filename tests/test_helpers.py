@@ -1,7 +1,7 @@
 import pytest
 
 
-@pytest.mark.parametrize("x, expected", [
+@pytest.mark.parametrize(("x", "expected"), [
     ("", ""),
     ("foobar", "foobar"),
     ("foo/bar", "foo%2Fbar"),

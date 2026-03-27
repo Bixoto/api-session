@@ -1,8 +1,9 @@
+from typing import Optional, Union, Any
+from urllib.parse import quote as urlquote
+
 import requests
 from requests import HTTPError
 from requests.adapters import HTTPAdapter
-from typing import Optional, Union, Text, Dict, Any, Tuple
-from urllib.parse import quote as urlquote
 from urllib3 import Timeout, Retry
 
 __version__ = "1.5.3"
@@ -15,7 +16,7 @@ __all__ = (
 
 # We can’t really do better than Any for now.
 # See https://github.com/python/typing/issues/182.
-JSONDict = Dict[str, Any]
+JSONDict = dict[str, Any]
 
 
 def escape_path(x: Any, *, safe: str = "") -> str:
@@ -31,7 +32,7 @@ class APISession(requests.Session):
                  offline: bool = False,
                  none_on_404: bool = True,
                  none_on_empty: bool = False,
-                 timeout: Optional[Union[int, Tuple[int, int], Timeout]] = None,
+                 timeout: Optional[Union[int, tuple[int, int], Timeout]] = None,
                  max_retries: Optional[Union[int, bool, Retry]] = None):
         """:param base_url: Base URL of the API.
         :param user_agent: Optional user-agent header to use.
@@ -89,7 +90,7 @@ class APISession(requests.Session):
         """
         return response.status_code // 100 == 4
 
-    def request(self, method: Union[str, bytes], url: Union[str, bytes, Text], *args: Any,
+    def request(self, method: Union[str, bytes], url: Union[str, bytes, str], *args: Any,
                 bypass_read_only: bool = False,
                 **kwargs: Any) -> requests.Response:
         """:param method: method argument passed to the underlying ``.request()`` method
@@ -100,10 +101,10 @@ class APISession(requests.Session):
         :return:
         """
         if self.offline:
-            raise AssertionError("Can't perform %r action in offline mode!" % method)
+            raise AssertionError(f"Can't perform {method!r} action in offline mode!")
 
         if self.read_only and not bypass_read_only and method.upper() not in self.READ_METHODS:
-            raise AssertionError("Can't perform %r action in read-only mode!" % method)
+            raise AssertionError(f"Can't perform {method!r} action in read-only mode!")
 
         if "timeout" not in kwargs and self.timeout is not None:
             kwargs["timeout"] = self.timeout

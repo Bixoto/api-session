@@ -6,7 +6,7 @@ from requests import HTTPError
 from api_session import APISession
 
 
-@pytest.fixture()
+@pytest.fixture
 def httpbin_session():
     return APISession("https://httpbingo.org")
 
