@@ -18,7 +18,7 @@ Homepage = "https://github.com/Bixoto/api-session"
 
 [dependency-groups]
 dev = [
-    "mypy>=1,<2",
+    "mypy>=2,<3",
     "types-requests",
     "pytest>=8,<9",
     "pytest-cov>=7,<8",
