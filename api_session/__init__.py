@@ -29,6 +29,7 @@ _none = object()
 
 class APISession(requests.Session):
     """HTTP Session with helpers to call a JSON-based API."""
+
     READ_METHODS: set[str] = {"HEAD", "GET", "OPTIONS", "CONNECT", "TRACE"}
     DEFAULT_RETRY_PARAMS: dict[str, Any] | None = {"total": 5, "backoff_factor": 0.2, "raise_on_status": False}
 
@@ -128,7 +129,7 @@ class APISession(requests.Session):
 
     def request_api(self, method: str, path: str, *args: Any, throw: bool | None = None,
                     **kwargs: Any) -> requests.Response:
-        """Wrapper around .request() that prefixes the path with the base API URL.
+        """Wrap .request() to prefix the path with the base API URL.
 
         :param method: HTTP method
         :param path: API path. This must start with "/"
